@@ -1,3 +1,5 @@
+import { Container } from 'react-bootstrap'
+
 export function Welcome() {
-    return <div>Test</div>
+    return <Container>Test</Container>
 }
