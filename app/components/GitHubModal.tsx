@@ -1,5 +1,6 @@
 import { Modal, Button, FormControl } from 'react-bootstrap'
 import { useState } from 'react'
+import { createStackBlitzUrl } from '~/utils/utils'
 
 interface GitHubModalProps {
     show: boolean
@@ -10,7 +11,7 @@ export function GitHubModal({ show, handleClose }: GitHubModalProps) {
     const [githubUrl, setGithubUrl] = useState('')
 
     const handleOpenGithub = () => {
-        window.open(githubUrl, '_blank')
+        window.open(createStackBlitzUrl(githubUrl))
         handleClose()
     }
 
