@@ -59,17 +59,21 @@ export function FrameworkTabs() {
             <Container>
                 <Tab.Container defaultActiveKey="Frontend">
                     <Nav variant="tabs" className="mb-3">
-                        {Object.keys(data).map((key) => (
-                            <Nav.Item key={key}>
-                                <Nav.Link eventKey={key}>{key}</Nav.Link>
-                            </Nav.Item>
+                        {Object.keys(filteredData).map((key) => (
+                            filteredData[key].length > 0 && (
+                                <Nav.Item key={key}>
+                                    <Nav.Link eventKey={key}>{key}</Nav.Link>
+                                </Nav.Item>
+                            )
                         ))}
                     </Nav>
                     <Tab.Content>
                         {Object.entries(filteredData).map(([key, frameworks]) => (
-                            <Tab.Pane key={key} eventKey={key}>
-                                <FrameworkGrid data={frameworks} />
-                            </Tab.Pane>
+                            frameworks.length > 0 && (
+                                <Tab.Pane key={key} eventKey={key}>
+                                    <FrameworkGrid data={frameworks} />
+                                </Tab.Pane>
+                            )
                         ))}
                     </Tab.Content>
                 </Tab.Container>
