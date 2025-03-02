@@ -14,12 +14,12 @@ import vanilla from '../../data/vanilla.json'
 const data = {
     Frontend: frontend,
     Backend: backend,
-    Documentation: docs,
     'Full Stack': fullstack,
-    'Mobile & VR': mobileVr,
-    'Native Languages': nativeLanguages,
+    Vanilla: vanilla,
     Popular: popular,
-    Vanilla: vanilla
+    'Mobile & VR': mobileVr,
+    Documentation: docs,
+    'Native Languages': nativeLanguages
 }
 
 export function FrameworkTabs() {
@@ -59,22 +59,24 @@ export function FrameworkTabs() {
             <Container>
                 <Tab.Container defaultActiveKey="Frontend">
                     <Nav variant="tabs" className="mb-3">
-                        {Object.keys(filteredData).map((key) => (
-                            filteredData[key].length > 0 && (
-                                <Nav.Item key={key}>
-                                    <Nav.Link eventKey={key}>{key}</Nav.Link>
-                                </Nav.Item>
-                            )
-                        ))}
+                        {Object.keys(filteredData).map(
+                            (key) =>
+                                filteredData[key].length > 0 && (
+                                    <Nav.Item key={key}>
+                                        <Nav.Link eventKey={key}>{key}</Nav.Link>
+                                    </Nav.Item>
+                                )
+                        )}
                     </Nav>
                     <Tab.Content>
-                        {Object.entries(filteredData).map(([key, frameworks]) => (
-                            frameworks.length > 0 && (
-                                <Tab.Pane key={key} eventKey={key}>
-                                    <FrameworkGrid data={frameworks} />
-                                </Tab.Pane>
-                            )
-                        ))}
+                        {Object.entries(filteredData).map(
+                            ([key, frameworks]) =>
+                                frameworks.length > 0 && (
+                                    <Tab.Pane key={key} eventKey={key}>
+                                        <FrameworkGrid data={frameworks} />
+                                    </Tab.Pane>
+                                )
+                        )}
                     </Tab.Content>
                 </Tab.Container>
             </Container>
