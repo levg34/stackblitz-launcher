@@ -1,14 +1,17 @@
 import { Container, Navbar, Form, FormControl, Dropdown, Nav } from 'react-bootstrap'
 import { useState, useEffect } from 'react'
 import { GitHubModal } from './GitHubModal'
+import { targets, type TargetSite } from '~/utils/targets'
 
 interface NavigationBarProps {
     onSearch: (term: string) => void
     onLanguageFilter: (language: string) => void
     languages: string[]
+    target: TargetSite
+    setTarget: (t: TargetSite) => void
 }
 
-export function NavigationBar({ onSearch, onLanguageFilter, languages }: NavigationBarProps) {
+export function NavigationBar({ onSearch, onLanguageFilter, languages, target, setTarget }: NavigationBarProps) {
     const [searchTerm, setSearchTerm] = useState('')
     const [selectedLanguage, setSelectedLanguage] = useState('All Languages')
     const [showModal, setShowModal] = useState(false)
@@ -35,6 +38,15 @@ export function NavigationBar({ onSearch, onLanguageFilter, languages }: Navigat
                         <Nav className="me-auto">
                             <Nav.Link onClick={handleOpenModal}>Open GitHub repository</Nav.Link>
                         </Nav>
+                        <Dropdown>
+                            <Dropdown.Toggle variant="outline-secondary">Selected target: {target}</Dropdown.Toggle>
+
+                            <Dropdown.Menu>
+                                {targets.map((t) => (
+                                    <Dropdown.Item onClick={() => setTarget(t)}>{t}</Dropdown.Item>
+                                ))}
+                            </Dropdown.Menu>
+                        </Dropdown>
                         <Form className="d-flex align-items-center gap-2 ms-auto">
                             <FormControl
                                 type="search"
@@ -67,7 +79,7 @@ export function NavigationBar({ onSearch, onLanguageFilter, languages }: Navigat
                 </Container>
             </Navbar>
 
-            <GitHubModal show={showModal} handleClose={handleCloseModal} />
+            <GitHubModal show={showModal} handleClose={handleCloseModal} target={target} />
         </>
     )
 }

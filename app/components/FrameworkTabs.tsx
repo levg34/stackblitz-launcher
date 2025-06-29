@@ -10,6 +10,7 @@ import mobileVr from '../../data/mobile-vr.json'
 import nativeLanguages from '../../data/native-languages.json'
 import popular from '../../data/popular.json'
 import vanilla from '../../data/vanilla.json'
+import type { TargetSite } from '~/utils/targets'
 
 const data = {
     Frontend: frontend,
@@ -25,6 +26,8 @@ const data = {
 export function FrameworkTabs() {
     const [searchTerm, setSearchTerm] = useState('')
     const [languageFilter, setLanguageFilter] = useState('')
+
+    const [target, setTarget] = useState<TargetSite>('StackBlitz')
 
     // Get unique languages from all frameworks
     const languages = useMemo(() => {
@@ -55,7 +58,13 @@ export function FrameworkTabs() {
 
     return (
         <>
-            <NavigationBar onSearch={setSearchTerm} onLanguageFilter={setLanguageFilter} languages={languages} />
+            <NavigationBar
+                onSearch={setSearchTerm}
+                onLanguageFilter={setLanguageFilter}
+                languages={languages}
+                target={target}
+                setTarget={setTarget}
+            />
             <Container>
                 <Tab.Container defaultActiveKey="Frontend">
                     <Nav variant="tabs" className="mb-3">
@@ -73,7 +82,7 @@ export function FrameworkTabs() {
                             ([key, frameworks]) =>
                                 frameworks.length > 0 && (
                                     <Tab.Pane key={key} eventKey={key}>
-                                        <FrameworkGrid data={frameworks} />
+                                        <FrameworkGrid data={frameworks} target={target} />
                                     </Tab.Pane>
                                 )
                         )}

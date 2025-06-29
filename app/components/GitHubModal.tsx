@@ -1,17 +1,26 @@
 import { Modal, Button, FormControl } from 'react-bootstrap'
 import { useState } from 'react'
-import { createStackBlitzUrl } from '~/utils/utils'
+import { createBoltUrl, createGithubUrl, createStackBlitzUrl } from '~/utils/utils'
+import type { TargetSite } from '~/utils/targets'
 
 interface GitHubModalProps {
     show: boolean
     handleClose: () => void
+    target: TargetSite
 }
 
-export function GitHubModal({ show, handleClose }: GitHubModalProps) {
+export function GitHubModal({ show, handleClose, target }: GitHubModalProps) {
     const [githubUrl, setGithubUrl] = useState('')
 
     const handleOpenGithub = () => {
-        window.open(createStackBlitzUrl(githubUrl))
+        const stackBlitzUrl = createStackBlitzUrl(githubUrl)
+        const openUrl =
+            target === 'StackBlitz'
+                ? stackBlitzUrl
+                : target === 'Bolt.new'
+                ? createBoltUrl(stackBlitzUrl)
+                : createGithubUrl(stackBlitzUrl)
+        window.open(openUrl)
         handleClose()
     }
 
@@ -33,7 +42,7 @@ export function GitHubModal({ show, handleClose }: GitHubModalProps) {
                     Close
                 </Button>
                 <Button variant="primary" onClick={handleOpenGithub} disabled={!githubUrl}>
-                    Open
+                    Open in {target}
                 </Button>
             </Modal.Footer>
         </Modal>
